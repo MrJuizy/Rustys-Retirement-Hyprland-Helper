@@ -1,0 +1,1 @@
+# Rusty-s-Retirement-Hyprland-reserved-Screenspace
