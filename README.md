@@ -2,6 +2,7 @@
 
 ### Dependencies
 - gamescope
+- Rusty's Retirement
 - my install script
 ### Installing
 
