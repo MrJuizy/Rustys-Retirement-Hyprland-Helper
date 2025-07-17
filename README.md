@@ -6,16 +6,23 @@
 - my install script
 ### Installing
 
-```git clone https://github.com/MrJuizy/dotfiles-and-install-script/```
+1. Make sure you have the dependencies installed (see above).
+2. In this project directory, make the install script executable:
 
-```cd dotfiles-and-install-script```
+   ```sh
+   chmod +x install.sh
+   ```
 
-```chmod +x install.sh```
+3. Run the install script:
 
-```./install.sh```
+   ```sh
+   ./install.sh
+   ```
 ## Authors
 [me lol](https://github.com/MrJuizy/)
 ## Version History
+* 0.2
+    * Updated install instructions to use local install.sh
 * 0.1
     * Initial Release
 
