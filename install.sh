@@ -5,87 +5,77 @@ if ! command -v gamescope &>/dev/null; then
     echo "Please install gamescope to use this script"
     exit 1
 fi
+if ! command -v jq &>/dev/null; then
+    echo "jq is not installed"
+    echo "Please install jq to use this script"
+    exit 1
+fi  
+
+# Source for Variables
+source "$(dirname "$0")/hardwaredetection.sh"
+source "$(dirname "$0")/templates.sh"
+
 while true
 do
     PS3="Select an orientation: "
-    options=(
+    game_orientation=(
         "Horizontal"
         "Vertical"
         "Quit"
     )
-    #TODO Check if you can use  txt file from folder to slim down echo for  reservespace.sh and that append for userprefs.conf
-    select opt in "${options[@]}"
+    select opt in "${game_orientation[@]}"
     do
         case $opt in
             "Horizontal")
+                reserved=296
                 echo "$opt it is. Classic!"
                 PS3="Select your preferred Location: "
-                options2=(
+                scr_locationTB=(
                     "Top"
                     "Bottom"
                     "Back"
                 )
-                select subopttb in "${options2[@]}"
+                select subopttb in "${scr_locationTB[@]}"
                 do
                     case $subopttb in
                         "Top")
                             echo "$subopttb - You maniac!"
-                            echo '#!/bin/bash
-while getopts "rq" opt; do
-case $opt in
-r) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,296,0,0,0;;
-q) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,0,0,0;;
-\?) echo "Invalid option: -$OPTARG" >&2; exit 1;;
-esac
-done' > ~/.steam/steam/steamapps/common/Rusty's Retirement/reservespace.sh
-                            echo "# Rusty Retirement Game Overlay
-windowrulev2 = tag +rtr, title:(Rusty's Retirement)
-windowrulev2 = float, tag:rtr
-
-# Remove this if you don't want rtr to appear in all workspaces
-windowrulev2 = pin, tag:rtr
-# Sizing of window
-windowrulev2 = size 100% 296, tag:rtr
-
-# Move rtr to top of the screen
-windowrulev2 = move 0 42, tag:rtr
-
-# Visibility rules
-windowrulev2 = noblur, tag:rtr
-windowrulev2 = noshadow, tag:rtr
-windowrulev2 = noborder, tag:rtr
-windowrulev2 = opacity 1.0 override, tag:rtr
-windowrulev2 = norounding, tag:rtr" >> ~/.config/hypr/userprefs.conf
+                            generate_reservespace_sh "$subopttb" "$reserved" > reservespace.sh
+                            chmod +x reservespace.sh
+                            generate_userprefs_conf "$desktop_width" "$reserved" "$reserved_left " "$reserved_top" >> ~/.config/hypr/userprefs.conf
+                            echo -e "\n--- Launch Options ---"
+                            echo "$(generate_launch_options "$desktop_width" "$reserved")"
+                            echo -e "---------------------\n"
+                            echo -e "You can copy from terminal with Ctrl+Shift+C"
+                            echo -e "---------------------\n"
+                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            while [[ "$confirm" != "launch options set" ]]; do
+                                read -p "Type 'launch options set' to continue: " confirm
+                            done
+                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            while [[ "$confirm" != "done" ]]; do
+                                read -p "Type 'done' to complete the setup: " confirm
+                            done
                             break 3
                             ;;
                         "Bottom")
                             echo "$subopttb - Another classic!"
-                            echo '#!/bin/bash
-while getopts "rq" opt; do
-case $opt in
-r) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,296,0,0;;
-q) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,0,0,0;;
-\?) echo "Invalid option: -$OPTARG" >&2; exit 1;;
-esac
-done' > ~/.steam/steam/steamapps/common/Rusty's Retirement/reservespace.sh
-                            echo "# Rusty Retirement Game Overlay
-windowrulev2 = tag +rtr, title:(Rusty's Retirement)
-windowrulev2 = float, tag:rtr
-
-# Remove this if you don't want rtr to appear in all workspaces
-windowrulev2 = pin, tag:rtr
-# Sizing of window
-windowrulev2 = size 100% 296, tag:rtr
-
-# Move rtr to top of the screen
-windowrulev2 = move 0 100%-296, tag:rtr
-
-# Visibility rules
-windowrulev2 = noblur, tag:rtr
-windowrulev2 = noshadow, tag:rtr
-windowrulev2 = noborder, tag:rtr
-windowrulev2 = opacity 1.0 override, tag:rtr
-windowrulev2 = norounding, tag:rtr" >> ~/.config/hypr/userprefs.conf
+                            generate_reservespace_sh "$subopttb" "$reserved" > reservespace.sh
+                            chmod +x reservespace.sh
+                            generate_userprefs_conf "$desktop_width" "$reserved" "$reserved_left" "$(desktop_height - $reserved)" >> ~/.config/hypr/userprefs.conf
+                            echo -e "\n--- Launch Options ---"
+                            echo "$(generate_launch_options "$desktop_width" "$reserved")"
+                            echo -e "---------------------\n"
+                            echo -e "You can copy from terminal with Ctrl+Shift+C"
+                            echo -e "---------------------\n"
+                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            while [[ "$confirm" != "launch options set" ]]; do
+                                read -p "Type 'launch options set' to continue: " confirm
+                            done
+                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            while [[ "$confirm" != "done" ]]; do
+                                read -p "Type 'done' to complete the setup: " confirm
+                            done
                             break 3
                             ;;
                         "Back")
@@ -99,76 +89,55 @@ windowrulev2 = norounding, tag:rtr" >> ~/.config/hypr/userprefs.conf
                 done
                 ;;
             "Vertical")
+                reserved=500
                 echo "$opt - Alright, an efficient one!"
                 PS3="Select the preferred Side of your Monitor: "    
-                options3=(
+                scr_locationLR=(
                     "Left"
                     "Right"
                     "Back"
                 )
-                select suboptlr in "${options3[@]}"
+                select suboptlr in "${scr_locationLR[@]}"
                 do
                     case $suboptlr  in
                         "Left")
                             echo "$suboptlr it is."
-                            echo '#!/bin/bash
-while getopts "rq" opt; do
-case $opt in
-r) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,0,500,0;;
-q) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,0,0,0;;
-\?) echo "Invalid option: -$OPTARG" >&2; exit 1;;
-esac
-done' > ~/.steam/steam/steamapps/common/Rusty's Retirement/reservespace.sh
-                            echo "# Rusty Retirement Game Overlay
-windowrulev2 = tag +rtr, title:(Rusty's Retirement)
-windowrulev2 = float, tag:rtr
-
-# Remove this if you don't want rtr to appear in all workspaces
-windowrulev2 = pin, tag:rtr
-# Sizing of window
-#TODO Check if its possible to pass a variable at XX
-windowrulev2 = size 500 XX, tag:rtr
-
-# Move rtr to top of the screen
-windowrulev2 = move 100%-500 42, tag:rtr
-
-# Visibility rules
-windowrulev2 = noblur, tag:rtr
-windowrulev2 = noshadow, tag:rtr
-windowrulev2 = noborder, tag:rtr
-windowrulev2 = opacity 1.0 override, tag:rtr
-windowrulev2 = norounding, tag:rtr" >> ~/.config/hypr/userprefs.conf
+                            generate_reservespace_sh "$suboptlr" "$reserved" > reservespace.sh
+                            chmod +x reservespace.sh
+                            generate_userprefs_conf "$reserved" "$desktop_height" "$reserved_left" "$reserved_top" >> ~/.config/hypr/userprefs.conf
+                            echo -e "\n--- Launch Options ---"
+                            echo "$(generate_launch_options "$reserved" "$desktop_height")"
+                            echo -e "---------------------\n"
+                            echo -e "You can copy from terminal with Ctrl+Shift+C"
+                            echo -e "---------------------\n"
+                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            while [[ "$confirm" != "launch options set" ]]; do
+                                read -p "Type 'launch options set' to continue: " confirm
+                            done
+                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            while [[ "$confirm" != "done" ]]; do
+                                read -p "Type 'done' to complete the setup: " confirm
+                            done
                             break 3
                             ;;
                         "Right")
                             echo "$suboptlr it is."
-                            echo '#!/bin/bash
-while getopts "rq" opt; do
-case $opt in
-r) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,0,0,500;;
-q) hyprctl keyword monitor $(hyprctl -j monitors | jq -r '.[].name'),addreserved,0,0,0,0;;
-\?) echo "Invalid option: -$OPTARG" >&2; exit 1;;
-esac
-done' > ~/.steam/steam/steamapps/common/Rusty's Retirement/reservespace.sh
-                            echo "# Rusty Retirement Game Overlay
-windowrulev2 = tag +rtr, title:(Rusty's Retirement)
-windowrulev2 = float, tag:rtr
-
-# Remove this if you don't want rtr to appear in all workspaces
-windowrulev2 = pin, tag:rtr
-# Sizing of window
-#TODO Check if its possible to pass a variable at XX
-windowrulev2 = size 500 XX, tag:rtr
-
-# Move rtr to top of the screen
-windowrulev2 = move 0 42, tag:rtr
-
-# Visibility rules
-windowrulev2 = noblur, tag:rtr
-windowrulev2 = noshadow, tag:rtr
-windowrulev2 = noborder, tag:rtr
-windowrulev2 = opacity 1.0 override, tag:rtr
-windowrulev2 = norounding, tag:rtr" >> ~/.config/hypr/userprefs.conf
+                            generate_reservespace_sh "$suboptlr" "$reserved" > reservespace.sh
+                            chmod +x reservespace.sh
+                            generate_userprefs_conf "$reserved" "$desktop_height" "$($desktop_width - $reserved)" "$reserved_top" >> ~/.config/hypr/userprefs.conf
+                            echo -e "\n--- Launch Options ---"
+                            echo "$(generate_launch_options "$reserved" "$desktop_height")"
+                            echo -e "---------------------\n"
+                            echo -e "You can copy from terminal with Ctrl+Shift+C"
+                            echo -e "---------------------\n"
+                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            while [[ "$confirm" != "launch options set" ]]; do
+                                read -p "Type 'launch options set' to continue: " confirm
+                            done
+                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            while [[ "$confirm" != "done" ]]; do
+                                read -p "Type 'done' to complete the setup: " confirm
+                            done
                             break 3
                             ;;
                         "Back")
