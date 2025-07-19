@@ -15,6 +15,11 @@ fi
 source "$(dirname "$0")/hardwaredetection.sh"
 source "$(dirname "$0")/templates.sh"
 
+read -p "WARNING! This script appends window rules to your userperfs.conf! Type 'I understand' to continue:" confirm
+while [[ "$confirm" != "I understand'" ]]; do
+    read -p "Type 'I understand' to continue:" confirm
+done
+
 while true
 do
     PS3="Select an orientation: "
