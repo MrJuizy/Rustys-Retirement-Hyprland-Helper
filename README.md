@@ -1,4 +1,4 @@
-# Rusty-s-Retirement-Hyprland-reserved-Screenspace
+# Rustys-Retirement-Hyprland-Helper
 
 ### Dependencies
 - gamescope
@@ -7,9 +7,6 @@
 ### Installing
 
 1. Make sure you have the dependencies installed:
-   - gamescope
-   - jq
-   - Rusty's Retirement (Steam)
 
 2. Clone this repository:
    ```sh
