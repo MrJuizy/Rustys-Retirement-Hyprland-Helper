@@ -15,8 +15,8 @@ fi
 source "$(dirname "$0")/hardwaredetection.sh"
 source "$(dirname "$0")/templates.sh"
 
-read -p "WARNING! This script appends window rules to your userperfs.conf! Type 'I understand' to continue:" confirm
-while [[ "$confirm" != "I understand'" ]]; do
+echo "WARNING! This script appends window rules to your userperfs.conf!"
+while [[ "$confirm" != "I understand" ]]; do
     read -p "Type 'I understand' to continue:" confirm
 done
 
@@ -28,12 +28,12 @@ do
         "Vertical"
         "Quit"
     )
-    select opt in "${game_orientation[@]}"
+    select ornt in "${game_orientation[@]}"
     do
-        case $opt in
+        case $ornt in
             "Horizontal")
                 reserved=296
-                echo "$opt it is. Classic!"
+                echo "$ornt it is. Classic!"
                 PS3="Select your preferred Location: "
                 scr_locationTB=(
                     "Top"
@@ -53,11 +53,11 @@ do
                             echo -e "---------------------\n"
                             echo -e "You can copy from terminal with Ctrl+Shift+C"
                             echo -e "---------------------\n"
-                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            echo "Add the Launch Options to the Game!"
                             while [[ "$confirm" != "launch options set" ]]; do
                                 read -p "Type 'launch options set' to continue: " confirm
                             done
-                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            echo "Copy the reservespace.sh to the Game's root folder."
                             while [[ "$confirm" != "done" ]]; do
                                 read -p "Type 'done' to complete the setup: " confirm
                             done
@@ -73,11 +73,11 @@ do
                             echo -e "---------------------\n"
                             echo -e "You can copy from terminal with Ctrl+Shift+C"
                             echo -e "---------------------\n"
-                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            echo "Add the Launch Options to the Game!"
                             while [[ "$confirm" != "launch options set" ]]; do
                                 read -p "Type 'launch options set' to continue: " confirm
                             done
-                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            echo "Copy the reservespace.sh to the Game's root folder."
                             while [[ "$confirm" != "done" ]]; do
                                 read -p "Type 'done' to complete the setup: " confirm
                             done
@@ -95,7 +95,7 @@ do
                 ;;
             "Vertical")
                 reserved=500
-                echo "$opt - Alright, an efficient one!"
+                echo "$ornt - Alright, an efficient one!"
                 PS3="Select the preferred Side of your Monitor: "    
                 scr_locationLR=(
                     "Left"
@@ -115,11 +115,11 @@ do
                             echo -e "---------------------\n"
                             echo -e "You can copy from terminal with Ctrl+Shift+C"
                             echo -e "---------------------\n"
-                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            echo "Add the Launch Options to the Game!"
                             while [[ "$confirm" != "launch options set" ]]; do
                                 read -p "Type 'launch options set' to continue: " confirm
                             done
-                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            echo "Copy the reservespace.sh to the Game's root folder."
                             while [[ "$confirm" != "done" ]]; do
                                 read -p "Type 'done' to complete the setup: " confirm
                             done
@@ -135,11 +135,11 @@ do
                             echo -e "---------------------\n"
                             echo -e "You can copy from terminal with Ctrl+Shift+C"
                             echo -e "---------------------\n"
-                            read -p "Add the Launch Options to the Game! Type 'launch options set' to continue: " confirm
+                            echo "Add the Launch Options to the Game!"
                             while [[ "$confirm" != "launch options set" ]]; do
                                 read -p "Type 'launch options set' to continue: " confirm
                             done
-                            read -p "Copy the reservespace.sh to the Game's root folder. Type 'done' to complete the setup:" confirm
+                            echo "Copy the reservespace.sh to the Game's root folder."
                             while [[ "$confirm" != "done" ]]; do
                                 read -p "Type 'done' to complete the setup: " confirm
                             done
