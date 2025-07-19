@@ -1,4 +1,4 @@
-# Rusty-s-Retirement-Hyprland-reserved-Screenspace
+# Rustys-Retirement-Hyprland-Helper
 
 ### Dependencies
 - gamescope
