@@ -67,7 +67,7 @@ do
                             echo "$subopttb - Another classic!"
                             generate_reservespace_sh "$subopttb" "$reserved" > reservespace.sh
                             chmod +x reservespace.sh
-                            generate_userprefs_conf "$desktop_width" "$reserved" "$reserved_left" "$(desktop_height - $reserved)" >> ~/.config/hypr/userprefs.conf
+                            generate_userprefs_conf "$desktop_width" "$reserved" "$reserved_left" "$((desktop_height - reserved))" >> ~/.config/hypr/userprefs.conf
                             echo -e "\n--- Launch Options ---"
                             echo "$(generate_launch_options "$desktop_width" "$reserved")"
                             echo -e "---------------------\n"
@@ -94,7 +94,7 @@ do
                 done
                 ;;
             "Vertical")
-                reserved=500
+                reserved=498
                 echo "$ornt - Alright, an efficient one!"
                 PS3="Select the preferred Side of your Monitor: "    
                 scr_locationLR=(
@@ -129,7 +129,7 @@ do
                             echo "$suboptlr it is."
                             generate_reservespace_sh "$suboptlr" "$reserved" > reservespace.sh
                             chmod +x reservespace.sh
-                            generate_userprefs_conf "$reserved" "$desktop_height" "$($desktop_width - $reserved)" "$reserved_top" >> ~/.config/hypr/userprefs.conf
+                            generate_userprefs_conf "$reserved" "$desktop_height" "$((desktop_width - reserved))" "$reserved_top" >> ~/.config/hypr/userprefs.conf
                             echo -e "\n--- Launch Options ---"
                             echo "$(generate_launch_options "$reserved" "$desktop_height")"
                             echo -e "---------------------\n"

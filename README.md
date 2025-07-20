@@ -32,6 +32,9 @@
 ## Authors
 [me lol](https://github.com/MrJuizy/)
 ## Version History
+
+* 0.3.1
+   * Minor fixes
 * 0.3
     * Finished script and updated README
 * 0.2
