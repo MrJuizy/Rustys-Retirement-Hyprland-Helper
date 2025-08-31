@@ -5,30 +5,43 @@
 - jq
 - Rusty's Retirement
 ### Installing
+<br>
 
-1. Make sure you have the dependencies installed:
+> [!IMPORTANT]
+> Install Rusty's Retirement and launch once to choose horizontal or vertical layout!
 
-2. Clone this repository:
+<br>
+
+> [!CAUTION]
+> This script modifies you userprefs.conf in ~/.config/hypr/
+
+
+Make sure you have the dependencies installed.
+
+1. Clone this repository:
    ```sh
    git clone https://github.com/MrJuizy/Rustys-Retirement-Hyprland-Helper
    cd Rustys-Retirement-Hyprland-Helper
    ```
 
-3. Make the install script executable:
+2. Make the install script executable:
    ```sh
    chmod +x install.sh
    ```
 
-4. Run the install script:
+3. Run the install script:
    ```sh
    ./install.sh
    ```
 
-5. Follow the interactive prompts:
-   - Select your orientation and location/side for the reserved screenspace.
-   - Copy the generated `reservespace.sh` file to your game's root folder as instructed.
-   - Add the provided launch options to Rusty's Retirement in Steam (copy from terminal).
-   - Confirm each step as prompted to complete the setup.
+4. Follow the interactive prompts:
+<ul>
+<li>Select your orientation and location/side for the reserved screenspace.</li>
+<li>Copy the generated `reservespace.sh` file to your game's root folder as instructed.</li>
+<li>Add the provided launch options to Rusty's Retirement in Steam (copy from terminal).</li>
+<li>Confirm each step as prompted to complete the setup.</li>
+</ul>
+
 ## Authors
 [me lol](https://github.com/MrJuizy/)
 ## Version History
